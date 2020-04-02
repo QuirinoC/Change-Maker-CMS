@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+    app:
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: change-maker-backend
+        links:
+            - mongo
+        volumes:
+            - ./:/app
+        ports:
+            - "8080:8080"
+    mongo:
+        image: mongo
+        container_name: main-db
+        volumes:
+            - ~/data/db:/data/db
+        ports:
+            - "27017:27017"
