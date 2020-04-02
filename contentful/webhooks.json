@@ -25,9 +25,9 @@
       "transformation": {
         "body": {
           "id": "{ /payload/sys/id }",
+          "type" : "{ /payload/sys/type }",
           "contentType": "{ /payload/sys/contentType/sys/id }",
-          "fields": "{ /payload/fields }",
-          "payload": "{ /payload }"
+          "fields": "{ /payload/fields }"
         }
       },
       "sys": {

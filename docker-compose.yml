@@ -8,16 +8,18 @@ services:
             dockerfile: Dockerfile
         container_name: change-maker-backend
         links:
-            - mongo
+            - db
+        depends_on:
+            - db
         volumes:
             - ./:/app
         ports:
             - "8080:8080"
         environment:
             - PYTHONUNBUFFERED=1
-    mongo:
+    db:
         image: mongo
-        container_name: main-db
+        container_name: change_maker_db
         volumes:
             - ~/data/db:/data/db
         ports:
