@@ -3,3 +3,5 @@ package.json.lock
 yarn.lock
 node_modules/
 contentful-*
+__pycache__/
+contentful/package-lock.json
