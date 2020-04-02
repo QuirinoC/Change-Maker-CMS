@@ -45,12 +45,9 @@ def hooks_handler():
         'Entry' : insert_document,
         'DeletedEntry' : delete_document
     }[request_type]
+
     return handler(request.json)
-
-def normalize_fields(fields: dict):
-    for key in fields:
-        pass
-
+    
 def insert_document(req: dict):
     content_type = req.get('contentType')
     supported_content_types = ['evento', 'lugar', 'ponente']
