@@ -38,14 +38,13 @@ def hooks_handler():
     request_type = request.json.get('type')
     supported_types = ['Entry', 'DeletedEntry']
     # Validate request type to be Entry or Deleted Entry
-    if not type or request_type not in supported_types:
+    if not request_type or request_type not in supported_types:
         return make_response({'warning' : 'No handler defined for request type [Nothing done]'})
 
     handler = {
         'Entry' : insert_document,
         'DeletedEntry' : delete_document
     }[request_type]
-    print(request.json)
     return handler(request.json)
 
 def normalize_fields(fields: dict):
@@ -65,10 +64,10 @@ def insert_document(req: dict):
         'ponente' : insert_ponente,
         'lugar' : insert_lugar
     }[content_type]
-    handler_document(1 ,fields)
+    handler_document(fields)
     return {'ok': 'inserted document'}
 
-def insert_event(id, fields):
+def insert_event(fields):
     '''Evento(
         idEvento = id,
         titulo = fields.get('titulo')
