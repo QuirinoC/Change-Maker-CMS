@@ -11,11 +11,13 @@
     "export:sync": "npm run export && npm run sync"
   },
   "dependencies": {
+    "contentful": "^7.14.0",
     "contentful-export": "^7.4.0",
     "contentful-import": "^7.4.3",
     "diff-json": "^1.1.0",
     "dotenv": "^6.2.0",
     "json-templater": "^1.2.0",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "mkdirp": "^1.0.3"
   }
 }

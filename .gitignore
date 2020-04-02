@@ -1,6 +1,5 @@
 .env
 package.json.lock
-yarn.lock
 node_modules/
 contentful-*
 __pycache__/
