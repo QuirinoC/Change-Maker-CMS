@@ -18,14 +18,31 @@ connection = connect('change_maker_db',
         port=27017
         )
 
-def validate_contentful(func):
+def validate_secret(func):
     @wraps(func)
     def decorated(*args, **kwargs):
         secret = request.headers.get('secret')
-        if secret == SECRET_KEY:
-            return func(*args, **kwargs)
-        else:
+        if secret != SECRET_KEY:
             return make_response({"error" : "Invalid request token"})
+
+        return func(*args, **kwargs)
+    return decorated
+
+def validate_request(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        request_type = request.json.get('type')
+        supported_types = ['Entry', 'DeletedEntry']
+        content_type = request.json.get('contentType')
+        supported_content_types = ['evento', 'lugar', 'ponente']
+        # Validate request type to be Entry or Deleted Entry
+        if not request_type or request_type not in supported_types:
+            return make_response({'warning' : f'No handler defined for request type {request_type}'})
+        # Validate request type to be an accepted type
+        if not content_type or content_type not in supported_content_types:
+            return make_response({'warning' : f'No handler defined for content type {content_type}'})
+
+        return func(*args, **kwargs)
     return decorated
 
 @app.route('/', methods=['GET'])
@@ -33,69 +50,45 @@ def root():
     return 'Change Maker API for CMS '
 
 @app.route('/hooks', methods=['POST'])
-@validate_contentful
+@validate_secret
+@validate_request
 def hooks_handler():
+    content_type = request.json.get('contentType')
     request_type = request.json.get('type')
-    supported_types = ['Entry', 'DeletedEntry']
-    # Validate request type to be Entry or Deleted Entry
-    if not request_type or request_type not in supported_types:
-        return make_response({'warning' : 'No handler defined for request type [Nothing done]'})
-
     handler = {
         'Entry' : insert_document,
         'DeletedEntry' : delete_document
-    }[request_type]
+    }[request.json.get('type')]
 
-    return handler(request.json)
-    
-def insert_document(req: dict):
-    content_type = req.get('contentType')
-    supported_content_types = ['evento', 'lugar', 'ponente']
-    if not content_type or content_type not in supported_content_types:
-        return make_response({'warning' : 'No handler defined for content type [Nothing done]'})
-
-    fields = req.get('fields')
-    
-    handler_document = {
-        'evento' : insert_event,
-        'ponente' : insert_ponente,
-        'lugar' : insert_lugar
+    Document = {
+        'evento' : Evento,
+        'ponente' : Ponente,
+        'lugar' : Lugar
     }[content_type]
-    handler_document(fields)
-    return {'ok': 'inserted document'}
 
-def insert_event(fields):
-    '''Evento(
-        idEvento = id,
-        titulo = fields.get('titulo')
-        fecha = 
-        hora = 
-        lugar = 
-        ponente = 
-        tipo = 
-        duracion = 
-        aforo = 
-        categoria = 
-        etapa = 
-        descripcion_corta =
-        descripcion_completa =
-        foto_evento = 
-    ).save()
-    '''
-    return True
-def insert_ponente(fields):
-    Ponente(
+    return handler(request.json, Document)
 
-    ).save()
-    return True
-def insert_lugar(fields):
-    Lugar(
+def insert_document(req: dict, Document):
+    data = req.get('data')
+    
+    document_id = req.get('id')
+    try:
+        Document.objects(id=document_id).update_one(**data, upsert=True)
+        print(f'Stored document: {document_id}')
+        return make_response({'success' : f'Stored document {document_id}'})
+    except Exception as e:
+        print(f'Failed to store document: {document_id}')
+        print(e)
+        return make_response({'error' : f'Failed to store document {document_id}'})
+    
+def delete_document(req: dict, Document):
+    document_id = req.get('id')
 
-    ).save()
-    return True
-
-def delete_document(req: dict):
-    print('delete')
-    return {'ok' : 'deleted document'}
+    try:
+        Document.objects(id=document_id).delete()
+        return make_response({'success' : f'Deleted document {document_id}'})
+    except Exception as e:
+        print(f'Cannot delete {document_id}', e)
+        return make_response({'error' : f'Cannot delete {document_id}'})
 
 app.run('0.0.0.0', '8080', debug=True)
