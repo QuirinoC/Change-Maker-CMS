@@ -2,7 +2,7 @@
   "webhooks": [
     {
       "name": "Master Webhook",
-      "url": "{{CONTENT_WEBHOOK}}/hooks",
+      "url": "{{CONTENT_WEBHOOK}}{{WEBHOOK_URI}}",
       "httpBasicUsername": null,
       "topics": [
         "Entry.create",
