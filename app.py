@@ -68,6 +68,23 @@ def hooks_handler():
 
     return handler(request.json, Document)
 
+@app.route('/data', methods=['POST'])
+def data():
+    req = request.json
+    content_type = req.get('contentType')
+    req_query = req.get('query', {})
+
+    Document = {
+        'evento' : Evento,
+        'lugar' : Lugar,
+        'ponente' : Ponente
+    }[content_type]
+
+    query = Document.objects(**req_query)
+    if len(query) == 1:
+        query = query[0]
+    return query.to_json()
+
 def insert_document(req: dict, Document):
     data = req.get('data')
     
@@ -90,5 +107,6 @@ def delete_document(req: dict, Document):
     except Exception as e:
         print(f'Cannot delete {document_id}', e)
         return make_response({'error' : f'Cannot delete {document_id}'})
+
 
 app.run('0.0.0.0', '8080', debug=True)

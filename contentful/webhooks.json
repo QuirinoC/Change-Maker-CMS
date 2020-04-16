@@ -36,7 +36,7 @@
           "type": "{ /payload/sys/type }",
           "contentType": "{ /payload/sys/contentType/sys/id }",
           "data": {
-            "idEvento": "{ /payload/sys/id }",
+            "id": "{ /payload/sys/id }",
             "titulo": "{ /payload/fields/titulo/en-US }",
             "fecha": "{ /payload/fields/fecha/en-US }",
             "lugar": "{ /payload/fields/lugar/en-US/sys/id }",
@@ -118,11 +118,24 @@
         }
       ],
       "transformation": {
+        "body": {
+          "id": "{ /payload/sys/id }",
+          "type": "{ /payload/sys/type }",
+          "contentType": "{ /payload/sys/contentType/sys/id }",
+          "data": {
+            "id": "{ /payload/sys/id }",
+            "nombre": "{ /payload/fields/nombre/en-US }",
+            "organizacion": "{ /payload/fields/organizacion/en-US }",
+            "microsemblanza": "{ /payload/fields/microsemblanza/en-US }",
+            "foto_ponente": "{ /payload/fields/fotoPonente/en-US }",
+            "logo_organizacion": "{ /payload/fields/logoOrganizacion/en-US }"
+          }
+        }
       },
       "sys": {
         "type": "WebhookDefinition",
         "id": "44iWPUvkYnCIaZkOncTA1J",
-        "version": 1,
+        "version": 2,
         "space": {
           "sys": {
             "type": "Link",
@@ -184,11 +197,25 @@
           ]
         }
       ],
-      "transformation": null,
+      "transformation": {
+        "body": {
+          "id": "{ /payload/sys/id }",
+          "type": "{ /payload/sys/type }",
+          "contentType": "{ /payload/sys/contentType/sys/id }",
+          "data": {
+            "id": "{ /payload/sys/id }",
+            "nombre": "{ /payload/fields/nombre/en-US }",
+            "organizacion": "{ /payload/fields/organizacion/en-US }",
+            "microsemblanza": "{ /payload/fields/microsemblanza/en-US }",
+            "foto_ponente": "{ /payload/fields/fotoPonente/en-US }",
+            "logo_organizacion": "{ /payload/fields/logoOrganizacion/en-US }"
+          }
+        }
+      },
       "sys": {
         "type": "WebhookDefinition",
         "id": "1QZuLKC3RjTlQZJ3a6313o",
-        "version": 0,
+        "version": 2,
         "space": {
           "sys": {
             "type": "Link",
