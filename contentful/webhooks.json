@@ -1,7 +1,7 @@
 {
   "webhooks": [
     {
-      "name": "Evento {{CONTENTFUL_ENV}}",
+      "name": "{{CONTENTFUL_ENV}} hook",
       "url": "{{CONTENT_WEBHOOK}}{{WEBHOOK_URI}}",
       "httpBasicUsername": null,
       "topics": [
@@ -20,14 +20,6 @@
             },
             "{{CONTENTFUL_ENV}}"
           ]
-        },
-        {
-          "equals": [
-            {
-              "doc": "sys.contentType.sys.id"
-            },
-            "evento"
-          ]
         }
       ],
       "transformation": {
@@ -37,105 +29,14 @@
           "contentType": "{ /payload/sys/contentType/sys/id }",
           "data": {
             "id": "{ /payload/sys/id }",
-            "titulo": "{ /payload/fields/titulo/en-US }",
-            "fecha": "{ /payload/fields/fecha/en-US }",
-            "lugar": "{ /payload/fields/lugar/en-US/sys/id }",
-            "ponente": "{ /payload/fields/ponente/en-US/sys/id }",
-            "tipo": "{ /payload/fields/tipo/en-US }",
-            "duracion": "{ /payload/fields/duracion/en-US }",
-            "aforo": "{ /payload/fields/aforo/en-US }",
-            "categoria": "{ /payload/fields/categoria/en-US }",
-            "etapa": "{ /payload/fields/etapa/en-US }",
-            "descripcion_corta": "{ /payload/fields/descripcionCorta/en-US }",
-            "descripcion_completa": "{ /payload/fields/descripcionCompleta/en-US }",
-            "foto_evento": "{ /payload/fields/fotoEvento/en-US }"
-          }
-        }
-      },
-      "sys": {
-        "type": "WebhookDefinition",
-        "id": "5t8VUr8pwyNrw5peE4KFIu-master",
-        "version": 2,
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "2ss9yfafkl21"
-          }
-        },
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "6oz0WFJOeZrCwATHfMaNEp"
-          }
-        },
-        "createdAt": "2020-04-02T17:41:42Z",
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "6oz0WFJOeZrCwATHfMaNEp"
-          }
-        },
-        "updatedAt": "2020-04-02T19:20:44Z"
-      },
-      "headers": [
-        {
-          "key": "secret",
-          "value": "KeepThisSecret"
-        }
-      ]
-    },
-    {
-      "name": "Lugar {{CONTENTFUL_ENV}}",
-      "url": "{{CONTENT_WEBHOOK}}{{WEBHOOK_URI}}",
-      "httpBasicUsername": null,
-      "topics": [
-        "Entry.create",
-        "Entry.archive",
-        "Entry.unarchive",
-        "Entry.publish",
-        "Entry.unpublish",
-        "Entry.delete"
-      ],
-      "filters": [
-        {
-          "equals": [
-            {
-              "doc": "sys.environment.sys.id"
-            },
-            "{{CONTENTFUL_ENV}}"
-          ]
-        },
-        {
-          "equals": [
-            {
-              "doc": "sys.contentType.sys.id"
-            },
-            "lugar"
-          ]
-        }
-      ],
-      "transformation": {
-        "body": {
-          "id": "{ /payload/sys/id }",
-          "type": "{ /payload/sys/type }",
-          "contentType": "{ /payload/sys/contentType/sys/id }",
-          "data": {
-            "id": "{ /payload/sys/id }",
-            "nombre": "{ /payload/fields/nombre/en-US }",
-            "organizacion": "{ /payload/fields/organizacion/en-US }",
-            "microsemblanza": "{ /payload/fields/microsemblanza/en-US }",
-            "foto_ponente": "{ /payload/fields/fotoPonente/en-US }",
-            "logo_organizacion": "{ /payload/fields/logoOrganizacion/en-US }"
+            "fields": "{ /payload/fields/nombre/en-US }"
           }
         }
       },
       "sys": {
         "type": "WebhookDefinition",
         "id": "44iWPUvkYnCIaZkOncTA1J",
-        "version": 2,
+        "version": 1,
         "space": {
           "sys": {
             "type": "Link",
@@ -150,7 +51,7 @@
             "id": "6oz0WFJOeZrCwATHfMaNEp"
           }
         },
-        "createdAt": "2020-04-02T19:31:49Z",
+        "createdAt": "2020-04-16T16:06:35Z",
         "updatedBy": {
           "sys": {
             "type": "Link",
@@ -158,92 +59,12 @@
             "id": "6oz0WFJOeZrCwATHfMaNEp"
           }
         },
-        "updatedAt": "2020-04-02T19:35:41Z"
+        "updatedAt": "2020-04-16T16:08:35Z"
       },
       "headers": [
         {
-          "key": "secret",
-          "value": "KeepThisSecret"
-        }
-      ]
-    },
-    {
-      "name": "Ponente {{CONTENTFUL_ENV}}",
-      "url": "{{CONTENT_WEBHOOK}}{{WEBHOOK_URI}}",
-      "httpBasicUsername": null,
-      "topics": [
-        "Entry.create",
-        "Entry.archive",
-        "Entry.unarchive",
-        "Entry.publish",
-        "Entry.unpublish",
-        "Entry.delete"
-      ],
-      "filters": [
-        {
-          "equals": [
-            {
-              "doc": "sys.environment.sys.id"
-            },
-            "{{CONTENTFUL_ENV}}"
-          ]
-        },
-        {
-          "equals": [
-            {
-              "doc": "sys.contentType.sys.id"
-            },
-            "ponente"
-          ]
-        }
-      ],
-      "transformation": {
-        "body": {
-          "id": "{ /payload/sys/id }",
-          "type": "{ /payload/sys/type }",
-          "contentType": "{ /payload/sys/contentType/sys/id }",
-          "data": {
-            "id": "{ /payload/sys/id }",
-            "nombre": "{ /payload/fields/nombre/en-US }",
-            "organizacion": "{ /payload/fields/organizacion/en-US }",
-            "microsemblanza": "{ /payload/fields/microsemblanza/en-US }",
-            "foto_ponente": "{ /payload/fields/fotoPonente/en-US }",
-            "logo_organizacion": "{ /payload/fields/logoOrganizacion/en-US }"
-          }
-        }
-      },
-      "sys": {
-        "type": "WebhookDefinition",
-        "id": "1QZuLKC3RjTlQZJ3a6313o",
-        "version": 2,
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "2ss9yfafkl21"
-          }
-        },
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "6oz0WFJOeZrCwATHfMaNEp"
-          }
-        },
-        "createdAt": "2020-04-02T19:36:57Z",
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "6oz0WFJOeZrCwATHfMaNEp"
-          }
-        },
-        "updatedAt": "2020-04-02T19:36:57Z"
-      },
-      "headers": [
-        {
-          "key": "secret",
-          "value": "KeepThisSecret"
+          "key": "{{HOOK_KEY}}",
+          "value": "{{HOOK_SECRET}}"
         }
       ]
     }
