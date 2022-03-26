@@ -17,7 +17,7 @@
     "diff-json": "^1.1.0",
     "dotenv": "^6.2.0",
     "json-templater": "^1.2.0",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "mkdirp": "^1.0.3"
   }
 }
